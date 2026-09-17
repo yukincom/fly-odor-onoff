@@ -1,5 +1,7 @@
 # ハエ・コネクトーム模型における刺激後の残留活動
 
+匂いを切っても投射細胞の平均は高いままに見える。この記録は、DM1とVA2を担当する4細胞だけを見た場合のON／OFF／再ONである。回路全体を直した報告ではない。
+
 匂い刺激を止めたあとも、模型内の神経活動が続くのはなぜか。
 
 [fly-brain-minecraft](https://github.com/blendi-remade/fly-brain-minecraft/tree/6cfa30175003ef25da68a237d5eda958f8047b82) のコネクトーム由来LIF模型を用い、刺激後の活動を支える入力経路と、観測する細胞集団による結果の違いを調べた。刺激の停止期間だけ特定の入力を遮断し、刺激中・停止後・再刺激時の発火を比較した実験ノートである。
@@ -19,6 +21,8 @@ DM1／VA2に対応する4個の投射ニューロン（PN）では、興奮性�
 値は8試行の範囲。停止後の3つの観測窓では、平均だけでなく4細胞それぞれが0 Hzだった。時間窓の定義と個別値は [4 PNの時間応答](experiments/brain-four-pn-readout/README.md) に掲載している。
 
 ![4 PNの時間応答](experiments/brain-four-pn-readout/results/four-PN-time-response.png)
+
+この図はDM1／VA2の4細胞の平均であり、全686 ALPN平均の図ではない。
 
 ## 実験の構成
 
@@ -50,6 +54,8 @@ DM1／VA2に対応する4個の投射ニューロン（PN）では、興奮性�
 
 「既知正符号」は模型内の符号と伝達物質ラベルによる区分である。各物質の生体での作用をこの実験で検証したものではない。全686 ALPN平均は回路全体の指標として記録し、DM1／VA2の4 PN平均とは別に集計している。
 
+`hungry`／`satiated` は入力利得1.0／0.5の別名であり、空腹・満腹の生理状態を表すものではない。
+
 Java 25、Python 3、NumPyが必要。模型のバージョンとデータSHA256は [upstream.json](upstream.json) に記載している。
 
 ```sh
@@ -66,6 +72,8 @@ python3 -m venv .venv
 .venv/bin/python experiment.py --seed 2026091701 --gain 1 --gate known_positive \
   --jdk /path/to/jdk-25/bin --out runs/four-pn-seed1-gain1
 ```
+
+`--jdk` は使用環境のJDK 25の `bin` パスに置き換える。省略時は `JAVA_HOME` またはPATHのJDKを使うため、未導入なら先にJDK 25を用意する。
 
 Python API、引数、出力形式は [API.md](API.md)。他の2実験の実行例は各実験のREADMEに掲載している。
 

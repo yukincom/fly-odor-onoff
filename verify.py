@@ -18,6 +18,8 @@ def main():
     manifest(ROOT / 'MANIFEST.sha256')
     counts = {}
     for folder in sorted((ROOT/'experiments').iterdir()):
+        if not folder.is_dir():
+            continue
         experiment.verify_contract(folder.name)
         manifest(folder/'MANIFEST.sha256')
         frozen = json.loads((folder/'byte-copy-manifest.json').read_text())
