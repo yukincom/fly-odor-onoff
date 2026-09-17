@@ -1,41 +1,56 @@
-# ハエ・コネクトーム模型の残留活動：再現実験ノート
+# ハエ・コネクトーム模型における刺激後の残留活動
 
-**言ってよいこと：この固定刺激条件では、DM1／VA2の4 PN読み出し＋OFF到来だけの既知正符号eLN→PN停止で、ON応答が保たれ、OFF指標は個別4細胞とも0になり、再ONで応答が戻った。対応する8組すべてで確認した。**
+匂い刺激を止めたあとも、模型内の神経活動が続くのはなぜか。
 
-**言ってはいけないこと：生体の嗅覚を再現・完成した、全PNが沈黙した、神経自身が匂いの消失を判断した、別の匂い・強度・時系列でも成立する、特定経路の十分性や唯一の残留源を証明した。**
+[fly-brain-minecraft](https://github.com/blendi-remade/fly-brain-minecraft/tree/6cfa30175003ef25da68a237d5eda958f8047b82) のコネクトーム由来LIF模型を用い、刺激後の活動を支える入力経路と、観測する細胞集団による結果の違いを調べた。刺激の停止期間だけ特定の入力を遮断し、刺激中・停止後・再刺激時の発火を比較した実験ノートである。
 
-対象は [fly-brain-minecraft](https://github.com/blendi-remade/fly-brain-minecraft/tree/6cfa30175003ef25da68a237d5eda958f8047b82) の固定コネクトーム由来LIF模型。論文ではなく、同じ模型を回す開発者と、後から読む自分・共同作業者・エージェントのための実験記録である。commit・データハッシュは [upstream.json](upstream.json)。ゲーム本体を起動せずJavaハーネスで測定する。
+## 主な結果
 
-## 使い方：模型を使う開発者へ
+DM1／VA2に対応する4個の投射ニューロン（PN）では、興奮性局所ニューロン（eLN）からの既知正符号入力を刺激停止中だけ遮断すると、**刺激中の応答を保ったまま停止後の発火が0となり、再刺激で応答が回復した**。4乱数seed×2入力利得の8組すべてで確認した。
 
-1. **読む細胞**：DM1_lPN `10176`・`10208`、VA2_adPN `10390`・`10561`。平均と個別4細胞を併記する。
-2. **OFF規則**：外部の刺激／センサー状態がOFFのときだけ、到来する既知正符号ALLN→ALPN入力を止める。神経の残留出力を見てOFFを決めない。ONでは全入力を通す。到来済みの状態や膜電位をリセットしない。
-3. **停止先は全686 ALPN**：読み出し4 PNに停止先も絞った実験ではない。11,069辺＝ACh 10,944＋octopamine 125。unclearと負入力は通す。「既知」は模型の伝達物質ラベルがunclear以外という意味で、生体での興奮性の実証ではない。
-4. **匂いの読み出しに使わない平均**：全686 ALPN平均。型の異なる集団を含み、この4 PNの残留とも、全細胞の沈黙とも同一視できない。過去の全回路診断値としての利用は保持する。
+| 4 PNの平均発火率 | 入力遮断なし | 刺激停止中のみ遮断 |
+|---|---:|---:|
+| 初回刺激のピーク（50 ms窓） | 410〜455 Hz | 410〜455 Hz |
+| 刺激停止後1秒 | 330〜350 Hz | 0 Hz |
+| 刺激停止後20秒 | 335〜352.5 Hz | 0 Hz |
+| 再刺激のピーク（50 ms窓） | 410〜450 Hz | 410〜450 Hz |
+| 再刺激停止後1秒 | 332.5〜352.5 Hz | 0 Hz |
 
-この約束を [cohorts.json](experiments/brain-four-pn-readout/cohorts.json) と [protocol.json](experiments/brain-four-pn-readout/protocol.json) にも収録した。身体センサーのON／OFFをゲート入力にする場合も同じ契約だが、今回の実測入力は固定スケジュールであり、身体センサーの実動作を検証した結果ではない。
+値は8試行の範囲。停止後の3つの観測窓では、平均だけでなく4細胞それぞれが0 Hzだった。時間窓の定義と個別値は [4 PNの時間応答](experiments/brain-four-pn-readout/README.md) に掲載している。
 
-## 索引：3つの実験記録
+![4 PNの時間応答](experiments/brain-four-pn-readout/results/four-PN-time-response.png)
 
-| 実験 | 問いと結果 | 読み出し |
+## 実験の構成
+
+| 実験 | 調べたこと | 結果 |
 |---|---|---|
-| [brain-orn-entry](experiments/brain-orn-entry/README.md) | OFF中のPN／LN→残留10 ORNを止めると9細胞は静まるが、PN高活動は維持された | 固定10 ORNと全686 PNの診断値 |
-| [brain-pn-output](experiments/brain-pn-output/README.md) | 正符号eLN→PNのOFF到来停止で全PN平均は大幅低下。ただし全PN沈黙ではない | 全686 PNの診断値・個別最大値 |
-| [brain-four-pn-readout](experiments/brain-four-pn-readout/README.md) | 固定4 PNでON保持・OFF静穏・再ON回復・再OFF静穏が揃うか | DM1／VA2の4 PN |
+| [入口ORNへの戻り入力](experiments/brain-orn-entry/README.md) | PN／LNから残留10 ORNへの入力を停止 | 9 ORNは静まったが、PNの高活動は続いた |
+| [PNへのeLN入力](experiments/brain-pn-output/README.md) | eLNからPNへの正符号入力を停止 | 全PN平均は大幅に低下したが、一部のPNには高い発火が残った |
+| [DM1／VA2の4 PNの時間応答](experiments/brain-four-pn-readout/README.md) | 観測集団を固定し、刺激・停止・再刺激を比較 | 刺激中の応答保持、停止後の静穏、再刺激への応答を確認した |
 
-入口と出力は元回路から別々に介入した。ORN停止をPN停止へ重ねていない。これらを独立した二つの生物学的ループの証明とは扱わない。
+入口と出力への介入は、それぞれ元の回路から独立に実施した。
 
-## 記録の3層
+## 結果の適用範囲
 
-- **主張**：各READMEの冒頭。言えること・言えないことを固定。
-- **条件と判断**：`protocol.json`、`cohorts.json`、`decision-table.csv`。細胞ID、刺激、時間窓、停止規則、seed、ハッシュ、操作的な判定閾値。
-- **結果と同一性**：`results/summary.csv`・`report.json`等、`byte-copy-manifest.json`、`reference-hashes.json`、`MANIFEST.sha256`。全ステップの生記録は同梱せず、再実行して参照SHA256と照合する。
+今回の結果は、固定した模型・刺激履歴・細胞集団に対するものである。生体の嗅覚における同経路の役割や、別の匂い・刺激条件での応答は検証していない。
 
-`byte-copy-manifest.json` は過去の凍結記録からバイトを変えずに収録したファイル、`reference-hashes.json` は省略した生記録の照合先、`MANIFEST.sha256` はこの配布物の整合性を示す。**ハッシュがあることと、手元で再実行して一致したことは区別する。** 公開用protocolは元条件を明示的な契約へ整理したもので、元protocolのバイトコピーとは表記しない。
+遮断のタイミングには外部の刺激スケジュールを用いた。また、観測対象は4 PNだが、遮断対象は全686 ALPNへの該当入力である。全PN平均には異なる細胞集団の活動が含まれ、4 PNの静穏と全PNの静穏は区別される。
 
-## 再現する
+## 使い方
 
-Java 25、Python 3、NumPyを使う。初回だけ上流の固定commitと依存を用意する。接続データは上流から取得し、ハッシュで確認する。
+再現時の主な設定は次のとおり。
+
+| 項目 | 設定 |
+|---|---|
+| 観測細胞 | DM1_lPN `10176`・`10208`、VA2_adPN `10390`・`10561` |
+| 遮断する入力 | 全686 ALPNへ入る正符号ALLN入力のうち、伝達物質ラベルがunclear以外の11,069辺 |
+| 辺の内訳 | acetylcholine 10,944辺、octopamine 125辺 |
+| 遮断時刻 | 刺激停止期間に**到来する**入力。刺激中に到来する入力は通過 |
+| 保持する状態 | 膜電位・到来済みシナプス状態。停止時のリセットなし |
+
+「既知正符号」は模型内の符号と伝達物質ラベルによる区分である。各物質の生体での作用をこの実験で検証したものではない。全686 ALPN平均は回路全体の指標として記録し、DM1／VA2の4 PN平均とは別に集計している。
+
+Java 25、Python 3、NumPyが必要。模型のバージョンとデータSHA256は [upstream.json](upstream.json) に記載している。
 
 ```sh
 git clone https://github.com/blendi-remade/fly-brain-minecraft.git upstream
@@ -45,27 +60,27 @@ python3 -m venv .venv
 .venv/bin/python verify.py
 ```
 
-4 PN実験の一組（停止条件と新しい対照をともに再実行）：
+4 PN実験の一組を実行する。指定した停止条件と、同じseed・入力利得の対照をともに計算する。
 
 ```sh
 .venv/bin/python experiment.py --seed 2026091701 --gain 1 --gate known_positive \
   --jdk /path/to/jdk-25/bin --out runs/four-pn-seed1-gain1
 ```
 
-Pythonからは `from experiment import run`、`run(2026091701, 1.0, "known_positive")`。`JAVA_HOME`かPATHのJDKを使い、固有の `runs/` フォルダへ保存する。返り値は指標とバイト一致の検証JSON。既存出力先は拒否する。出力には生記録も生成されるが、`runs/` はGit対象外。
+Python API、引数、出力形式は [API.md](API.md)。他の2実験の実行例は各実験のREADMEに掲載している。
 
-全8組は同じ呼出しを4seed×利得1.0／0.5で繰り返す。各呼出しは対照と停止条件を実行するため計16試行となる。元の試験も単一worker、同時実行最大2試行。再現用CLIは1試行ずつ順番に実行する。所要時間・一時ファイル量は実行環境に依存する。
+## データと再現性
 
-過去2実験の実行例・停止モードは各READMEに記載。新しい条件は既存記録を上書きせず、新しい実験フォルダへprotocolを先に固定し、ハーネスと検査を対応させる。現在の実行入口は凍結した条件専用であり、JSONだけ変えて異なる条件で走ったことにはしない。
+各実験フォルダには、条件を記した `protocol.json`、対象集団の `cohorts.json`、判定表、結果CSV／JSONを収録している。全ステップの生記録は再実行時に生成され、収録した参照ハッシュと照合される。
 
-## 公開用の再現入口を検証した範囲
+| ファイル | 内容 |
+|---|---|
+| `decision-table.csv` | 試行ごとの評価値・判定 |
+| `results/summary.csv`・`report.json` | 集計結果と詳細指標 |
+| `byte-copy-manifest.json` | 元の記録とバイト一致を確認した収録ファイル |
+| `reference-hashes.json` | 生記録の再現照合用SHA256 |
+| `MANIFEST.sha256` | 配布ファイルの整合性確認用SHA256 |
 
-公開用の構成で4 PNの対照・停止条件、入口ORNの116辺停止、PN出力の全正符号停止を各1試行、計4試行新規実行し、生記録の参照ハッシュ一致を確認した。4 PN全16試行の再集計は元のCSV・JSONとバイト一致。入口／出力の過去64試行の指標も公開用計算器で再計算して照合した。条件改変・未知条件・記録上書きの拒否検査も通過。これは全80試行を公開用入口から新規再実行したという意味ではない。記録は [reproduction-check.json](reproduction-check.json)。
+本リポジトリの実行器で代表4試行を再実行し、生記録のハッシュ一致を確認した。4 PNの16試行、および入口・出力の64試行については保存記録から指標を再計算し、元の結果と照合した。検証環境と詳細は [reproduction-check.json](reproduction-check.json) に記載している。
 
-`verify.py` は配布物・契約・判定表の整合性検査だけで、シミュレーションを実行しない。拒否動作は `.venv/bin/python -m unittest test_contract.py` で確認できる。
-
-## エージェントに渡す小さい契約
-
-渡す対象は、一実験の `protocol.json`、`cohorts.json`、`results/summary.csv`／`report.json` と `run(seed, gain, gate)` の実行契約で足りる。役割は条件違反の検査と、次の条件の事前記述。残留を見てOFFを決める規則、無記録の追加切断、集団平均から全細胞沈黙への読み替えは入れない。[詳細](AGENT_CONTRACT.md)。
-
-出典・上流ライセンスは [NOTICE.md](NOTICE.md)。本ノートの主張は、上記の固定模型・刺激履歴・読み出し集団に限る。
+出典とライセンスは [NOTICE.md](NOTICE.md) を参照。
