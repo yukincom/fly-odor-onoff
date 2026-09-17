@@ -1,0 +1,21 @@
+{
+  "experiment_id": "brain-orn-entry",
+  "diagnostic_PN": {
+    "selector": "class:ALPN",
+    "count": 686,
+    "valid_only_for": "historical global PN endpoint; cannot be substituted for odor readout or every-cell silence"
+  },
+  "fixed_residual_ORN_ids": [
+    "111689",
+    "140755",
+    "153948",
+    "189046",
+    "211611",
+    "222974",
+    "513746",
+    "669738951",
+    "688942939",
+    "76504"
+  ],
+  "odor_readout_contract": "../brain-four-pn-readout/cohorts.json"
+}

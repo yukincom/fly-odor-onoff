@@ -1,0 +1,17 @@
+trial,condition,seed,gain_label,first_peaks_retained,first_late_retained,OFF1_quiet,OFF20_quiet,second_peaks_retained_vs_control,second_peaks_retained_vs_own_first,second_late_retained,second_rises_from_OFF20,reOFF1_quiet,all_reference_criteria_pass,all_cells_exact_OFF_zero,all_cells_quiet_tail
+control_hungry_2026091701,control,2026091701,hungry,True,True,False,False,True,True,True,True,False,False,False,False
+control_satiated_2026091701,control,2026091701,satiated,True,True,False,False,True,True,True,True,False,False,False,False
+control_hungry_2026091711,control,2026091711,hungry,True,True,False,False,True,True,True,True,False,False,False,False
+control_satiated_2026091711,control,2026091711,satiated,True,True,False,False,True,True,True,True,False,False,False,False
+control_hungry_2026091721,control,2026091721,hungry,True,True,False,False,True,True,True,True,False,False,False,False
+control_satiated_2026091721,control,2026091721,satiated,True,True,False,False,True,True,True,True,False,False,False,False
+control_hungry_2026091731,control,2026091731,hungry,True,True,False,False,True,True,True,True,False,False,False,False
+control_satiated_2026091731,control,2026091731,satiated,True,True,False,False,True,True,True,True,False,False,False,False
+known_positive_hungry_2026091701,known_positive,2026091701,hungry,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_satiated_2026091701,known_positive,2026091701,satiated,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_hungry_2026091711,known_positive,2026091711,hungry,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_satiated_2026091711,known_positive,2026091711,satiated,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_hungry_2026091721,known_positive,2026091721,hungry,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_satiated_2026091721,known_positive,2026091721,satiated,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_hungry_2026091731,known_positive,2026091731,hungry,True,True,True,True,True,True,True,True,True,True,True,True
+known_positive_satiated_2026091731,known_positive,2026091731,satiated,True,True,True,True,True,True,True,True,True,True,True,True

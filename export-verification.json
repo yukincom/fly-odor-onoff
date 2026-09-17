@@ -1,0 +1,21 @@
+{
+  "experiments": [
+    {
+      "experiment": "brain-orn-entry",
+      "copied_files": 33,
+      "raw_reference_files": 120
+    },
+    {
+      "experiment": "brain-pn-output",
+      "copied_files": 51,
+      "raw_reference_files": 361
+    },
+    {
+      "experiment": "brain-four-pn-readout",
+      "copied_files": 26,
+      "raw_reference_files": 16
+    }
+  ],
+  "source_and_export_hashes_checked": true,
+  "raw_steps_distributed": false
+}

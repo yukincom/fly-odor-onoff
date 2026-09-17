@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "readout": {
+    "name": "DM1_VA2_four_PN",
+    "cells": [
+      {
+        "body_id": "10176",
+        "type": "DM1_lPN"
+      },
+      {
+        "body_id": "10208",
+        "type": "DM1_lPN"
+      },
+      {
+        "body_id": "10390",
+        "type": "VA2_adPN"
+      },
+      {
+        "body_id": "10561",
+        "type": "VA2_adPN"
+      }
+    ],
+    "aggregate": "mean of these four only; report each cell OFF rate separately"
+  },
+  "gate_targets": {
+    "selector": "class:ALPN",
+    "count": 686,
+    "not_limited_to_readout": true
+  },
+  "forbidden_as_odor_readout": [
+    {
+      "selector": "class:ALPN",
+      "count": 686,
+      "reason": "Global ALPN mean mixes populations; valid historical circuit-wide diagnostic, not DM1/VA2 odor persistence or all-cell silence."
+    },
+    {
+      "selector": "type contains VP3",
+      "reason": "Do not merge this cohort into DM1/VA2 readout; no temperature interpretation in this protocol."
+    }
+  ],
+  "OFF_input": "external stimulus/sensor state, never a threshold on residual PN activity"
+}
