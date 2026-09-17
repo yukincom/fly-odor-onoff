@@ -1,5 +1,7 @@
 # 実行API
 
+[English](API_eng.md) | 日本語
+
 `experiment.run()` は指定した実験条件を再実行し、指標と参照記録との照合結果をJSON互換の辞書で返す。
 
 ```python

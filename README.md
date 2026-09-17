@@ -22,7 +22,7 @@ In four projection neurons (PNs) associated with DM1 and VA2, blocking inputs wi
 | Restimulation peak, 50 ms window | 410–450 Hz | 410–450 Hz |
 | 1 s after restimulation ends | 332.5–352.5 Hz | 0 Hz |
 
-Values are ranges across eight trials per condition. In all three post-stimulus measurement windows, each of the four cells individually had a firing rate of 0 Hz. Window definitions and individual values are provided in the [four-PN time-response experiment](experiments/brain-four-pn-readout/README.md) (Japanese).
+Values are ranges across eight trials per condition. In all three post-stimulus measurement windows, each of the four cells individually had a firing rate of 0 Hz. Window definitions and individual values are provided in the [four-PN time-response experiment](experiments/brain-four-pn-readout/README_eng.md).
 
 ![Time responses of the four PNs](experiments/brain-four-pn-readout/results/four-PN-time-response.png)
 
@@ -32,11 +32,11 @@ This figure shows the mean of the four DM1/VA2 cells, not the mean across all 68
 
 | Experiment | Question | Result |
 |---|---|---|
-| [Return inputs to ORNs](experiments/brain-orn-entry/README.md) | Block PN/LN inputs to ten ORNs with persistent firing | Nine ORNs became silent, while high PN activity persisted |
-| [eLN inputs to PNs](experiments/brain-pn-output/README.md) | Block positive-sign eLN inputs to PNs | The mean across all PNs fell substantially, but some PNs retained high firing rates |
-| [Time responses of four DM1/VA2 PNs](experiments/brain-four-pn-readout/README.md) | Fix the readout population and compare ON, OFF, and re-ON | Responses were preserved during stimulation, became silent after removal, and returned upon restimulation |
+| [Return inputs to ORNs](experiments/brain-orn-entry/README_eng.md) | Block PN/LN inputs to ten ORNs with persistent firing | Nine ORNs became silent, while high PN activity persisted |
+| [eLN inputs to PNs](experiments/brain-pn-output/README_eng.md) | Block positive-sign eLN inputs to PNs | The mean across all PNs fell substantially, but some PNs retained high firing rates |
+| [Time responses of four DM1/VA2 PNs](experiments/brain-four-pn-readout/README_eng.md) | Fix the readout population and compare ON, OFF, and re-ON | Responses were preserved during stimulation, became silent after removal, and returned upon restimulation |
 
-The input-side and output-side interventions were each applied separately to the original circuit. Detailed experiment READMEs are currently in Japanese.
+The input-side and output-side interventions were each applied separately to the original circuit.
 
 ## Scope
 
@@ -79,7 +79,7 @@ Run one paired configuration of the four-PN experiment. This runs both the speci
 
 Replace `--jdk` with the path to your JDK 25 `bin` directory. If omitted, the runner uses `JAVA_HOME` or the JDK on `PATH`. Install JDK 25 first if it is not available.
 
-The Python API, arguments, and output format are described in [API.md](API.md) (Japanese). Commands for the other two experiments appear in their respective READMEs.
+The Python API, arguments, and output format are described in [API_eng.md](API_eng.md). Commands for the other two experiments appear in their respective READMEs.
 
 ## Data and reproducibility
 
@@ -95,4 +95,8 @@ Each experiment folder contains its conditions in `protocol.json`, population de
 
 Four representative trials were rerun using this repository's runner, and their raw-record hashes matched the references. Metrics were also recomputed from saved records for all 16 four-PN trials and all 64 input-side/output-side trials, and checked against the original results. The verification environment and details are recorded in [reproduction-check.json](reproduction-check.json).
 
-See [NOTICE.md](NOTICE.md) for attribution and licensing information (Japanese).
+## Continuous integration
+
+GitHub Actions runs on pushes and pull requests. It checks dependency installation, Python syntax, distributed-file hashes, recorded decision tables, and the input-validation tests. These checks do not rerun the neural simulations; reproduction commands are provided above.
+
+See [NOTICE_eng.md](NOTICE_eng.md) for attribution and licensing information.
