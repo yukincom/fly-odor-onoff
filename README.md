@@ -1,62 +1,66 @@
-# ハエ・コネクトーム模型における刺激後の残留活動
+# fly-odor-onoff
 
-匂いを切っても投射細胞の平均は高いままに見える。この記録は、DM1とVA2を担当する4細胞だけを見た場合のON／OFF／再ONである。回路全体を直した報告ではない。
+English | [日本語](README_jp.md)
 
-匂い刺激を止めたあとも、模型内の神経活動が続くのはなぜか。
+Odor ON/OFF responses in a fly connectome model.
 
-[fly-brain-minecraft](https://github.com/blendi-remade/fly-brain-minecraft/tree/6cfa30175003ef25da68a237d5eda958f8047b82) のコネクトーム由来LIF模型を用い、刺激後の活動を支える入力経路と、観測する細胞集団による結果の違いを調べた。刺激の停止期間だけ特定の入力を遮断し、刺激中・停止後・再刺激時の発火を比較した実験ノートである。
+Average projection-neuron activity can remain high after odor input is switched off. This record follows ON, OFF, and re-ON responses in just four cells associated with DM1 and VA2. It does not report a correction of the entire circuit.
 
-## 主な結果
+Why does neural activity persist in the model after odor stimulation ends?
 
-DM1／VA2に対応する4個の投射ニューロン（PN）では、興奮性局所ニューロン（eLN）からの既知正符号入力を刺激停止中だけ遮断すると、**刺激中の応答を保ったまま停止後の発火が0となり、再刺激で応答が回復した**。4乱数seed×2入力利得の8組すべてで確認した。
+Using the connectome-derived leaky integrate-and-fire (LIF) model from [fly-brain-minecraft](https://github.com/blendi-remade/fly-brain-minecraft/tree/6cfa30175003ef25da68a237d5eda958f8047b82), these experiments examine which input pathways sustain post-stimulus activity and how the observed result depends on the cell population being measured. Selected inputs were blocked only during stimulus-OFF periods, and firing was compared during stimulation, after stimulus removal, and upon restimulation.
 
-| 4 PNの平均発火率 | 入力遮断なし | 刺激停止中のみ遮断 |
+## Main findings
+
+In four projection neurons (PNs) associated with DM1 and VA2, blocking inputs with a known positive sign from excitatory local neurons (eLNs) only during stimulus-OFF periods **preserved the initial stimulus response, reduced post-stimulus firing to zero, and allowed responses to return upon restimulation**. This pattern was observed in all eight paired configurations: four random seeds × two input gains.
+
+| Mean firing rate of the four PNs | No input block | Input blocked only during OFF |
 |---|---:|---:|
-| 初回刺激のピーク（50 ms窓） | 410〜455 Hz | 410〜455 Hz |
-| 刺激停止後1秒 | 330〜350 Hz | 0 Hz |
-| 刺激停止後20秒 | 335〜352.5 Hz | 0 Hz |
-| 再刺激のピーク（50 ms窓） | 410〜450 Hz | 410〜450 Hz |
-| 再刺激停止後1秒 | 332.5〜352.5 Hz | 0 Hz |
+| Initial stimulus peak, 50 ms window | 410–455 Hz | 410–455 Hz |
+| 1 s after stimulus removal | 330–350 Hz | 0 Hz |
+| 20 s after stimulus removal | 335–352.5 Hz | 0 Hz |
+| Restimulation peak, 50 ms window | 410–450 Hz | 410–450 Hz |
+| 1 s after restimulation ends | 332.5–352.5 Hz | 0 Hz |
 
-値は8試行の範囲。停止後の3つの観測窓では、平均だけでなく4細胞それぞれが0 Hzだった。時間窓の定義と個別値は [4 PNの時間応答](experiments/brain-four-pn-readout/README.md) に掲載している。
+Values are ranges across eight trials per condition. In all three post-stimulus measurement windows, each of the four cells individually had a firing rate of 0 Hz. Window definitions and individual values are provided in the [four-PN time-response experiment](experiments/brain-four-pn-readout/README.md) (Japanese).
 
-![4 PNの時間応答](experiments/brain-four-pn-readout/results/four-PN-time-response.png)
+![Time responses of the four PNs](experiments/brain-four-pn-readout/results/four-PN-time-response.png)
 
-この図はDM1／VA2の4細胞の平均であり、全686 ALPN平均の図ではない。
+This figure shows the mean of the four DM1/VA2 cells, not the mean across all 686 ALPNs.
 
-## 実験の構成
+## Experiments
 
-| 実験 | 調べたこと | 結果 |
+| Experiment | Question | Result |
 |---|---|---|
-| [入口ORNへの戻り入力](experiments/brain-orn-entry/README.md) | PN／LNから残留10 ORNへの入力を停止 | 9 ORNは静まったが、PNの高活動は続いた |
-| [PNへのeLN入力](experiments/brain-pn-output/README.md) | eLNからPNへの正符号入力を停止 | 全PN平均は大幅に低下したが、一部のPNには高い発火が残った |
-| [DM1／VA2の4 PNの時間応答](experiments/brain-four-pn-readout/README.md) | 観測集団を固定し、刺激・停止・再刺激を比較 | 刺激中の応答保持、停止後の静穏、再刺激への応答を確認した |
+| [Return inputs to ORNs](experiments/brain-orn-entry/README.md) | Block PN/LN inputs to ten ORNs with persistent firing | Nine ORNs became silent, while high PN activity persisted |
+| [eLN inputs to PNs](experiments/brain-pn-output/README.md) | Block positive-sign eLN inputs to PNs | The mean across all PNs fell substantially, but some PNs retained high firing rates |
+| [Time responses of four DM1/VA2 PNs](experiments/brain-four-pn-readout/README.md) | Fix the readout population and compare ON, OFF, and re-ON | Responses were preserved during stimulation, became silent after removal, and returned upon restimulation |
 
-入口と出力への介入は、それぞれ元の回路から独立に実施した。
+The input-side and output-side interventions were each applied separately to the original circuit. Detailed experiment READMEs are currently in Japanese.
 
-## 結果の適用範囲
+## Scope
 
-今回の結果は、固定した模型・刺激履歴・細胞集団に対するものである。生体の嗅覚における同経路の役割や、別の匂い・刺激条件での応答は検証していない。
+These results apply to the specified model, stimulus history, and cell populations. The roles of these pathways in biological olfaction, and responses to other odors or stimulus conditions, were not tested.
 
-遮断のタイミングには外部の刺激スケジュールを用いた。また、観測対象は4 PNだが、遮断対象は全686 ALPNへの該当入力である。全PN平均には異なる細胞集団の活動が含まれ、4 PNの静穏と全PNの静穏は区別される。
+Blocking was timed using an external stimulus schedule. Although the readout contains four PNs, the intervention targets the selected inputs to all 686 ALPNs. The all-PN mean includes activity from different cell populations; silence in the four-PN readout is distinct from silence across all PNs.
 
-## 使い方
+## Usage
 
-再現時の主な設定は次のとおり。
+Key settings for reproducing the experiment:
 
-| 項目 | 設定 |
+| Setting | Value |
 |---|---|
-| 観測細胞 | DM1_lPN `10176`・`10208`、VA2_adPN `10390`・`10561` |
-| 遮断する入力 | 全686 ALPNへ入る正符号ALLN入力のうち、伝達物質ラベルがunclear以外の11,069辺 |
-| 辺の内訳 | acetylcholine 10,944辺、octopamine 125辺 |
-| 遮断時刻 | 刺激停止期間に**到来する**入力。刺激中に到来する入力は通過 |
-| 保持する状態 | 膜電位・到来済みシナプス状態。停止時のリセットなし |
+| Readout cells | DM1_lPN `10176` and `10208`; VA2_adPN `10390` and `10561` |
+| Blocked inputs | 11,069 positive-sign ALLN edges onto all 686 ALPNs, excluding the neurotransmitter label `unclear` |
+| Edge breakdown | 10,944 acetylcholine edges; 125 octopamine edges |
+| Blocking time | Inputs **arriving** during stimulus-OFF periods; inputs arriving during ON pass through |
+| Preserved state | Membrane potential and existing synaptic state; no reset at stimulus removal |
 
-「既知正符号」は模型内の符号と伝達物質ラベルによる区分である。各物質の生体での作用をこの実験で検証したものではない。全686 ALPN平均は回路全体の指標として記録し、DM1／VA2の4 PN平均とは別に集計している。
+“Known positive sign” refers to the model's sign assignment and neurotransmitter labels. These experiments do not establish the biological action of each transmitter. The mean across all 686 ALPNs is recorded as a circuit-wide measure and analyzed separately from the four-PN DM1/VA2 mean.
 
-`hungry`／`satiated` は入力利得1.0／0.5の別名であり、空腹・満腹の生理状態を表すものではない。
+`hungry` and `satiated` are aliases for input gains of 1.0 and 0.5, respectively; they do not represent physiological hunger or satiety states.
 
-Java 25、Python 3、NumPyが必要。模型のバージョンとデータSHA256は [upstream.json](upstream.json) に記載している。
+Requirements: Java 25, Python 3, and NumPy. The model revision and data SHA256 are recorded in [upstream.json](upstream.json).
 
 ```sh
 git clone https://github.com/blendi-remade/fly-brain-minecraft.git upstream
@@ -66,29 +70,29 @@ python3 -m venv .venv
 .venv/bin/python verify.py
 ```
 
-4 PN実験の一組を実行する。指定した停止条件と、同じseed・入力利得の対照をともに計算する。
+Run one paired configuration of the four-PN experiment. This runs both the specified blocking condition and a control with the same seed and input gain.
 
 ```sh
 .venv/bin/python experiment.py --seed 2026091701 --gain 1 --gate known_positive \
   --jdk /path/to/jdk-25/bin --out runs/four-pn-seed1-gain1
 ```
 
-`--jdk` は使用環境のJDK 25の `bin` パスに置き換える。省略時は `JAVA_HOME` またはPATHのJDKを使うため、未導入なら先にJDK 25を用意する。
+Replace `--jdk` with the path to your JDK 25 `bin` directory. If omitted, the runner uses `JAVA_HOME` or the JDK on `PATH`. Install JDK 25 first if it is not available.
 
-Python API、引数、出力形式は [API.md](API.md)。他の2実験の実行例は各実験のREADMEに掲載している。
+The Python API, arguments, and output format are described in [API.md](API.md) (Japanese). Commands for the other two experiments appear in their respective READMEs.
 
-## データと再現性
+## Data and reproducibility
 
-各実験フォルダには、条件を記した `protocol.json`、対象集団の `cohorts.json`、判定表、結果CSV／JSONを収録している。全ステップの生記録は再実行時に生成され、収録した参照ハッシュと照合される。
+Each experiment folder contains its conditions in `protocol.json`, population definitions in `cohorts.json`, a decision table, and result CSV/JSON files. Full timestep records are generated during a rerun and checked against the included reference hashes.
 
-| ファイル | 内容 |
+| File | Contents |
 |---|---|
-| `decision-table.csv` | 試行ごとの評価値・判定 |
-| `results/summary.csv`・`report.json` | 集計結果と詳細指標 |
-| `byte-copy-manifest.json` | 元の記録とバイト一致を確認した収録ファイル |
-| `reference-hashes.json` | 生記録の再現照合用SHA256 |
-| `MANIFEST.sha256` | 配布ファイルの整合性確認用SHA256 |
+| `decision-table.csv` | Per-trial measurements and evaluation outcomes |
+| `results/summary.csv` and `report.json` | Aggregate results and detailed metrics |
+| `byte-copy-manifest.json` | Included files verified as byte-identical to the original records |
+| `reference-hashes.json` | SHA256 references for comparing regenerated raw records |
+| `MANIFEST.sha256` | SHA256 checksums for the distributed files |
 
-本リポジトリの実行器で代表4試行を再実行し、生記録のハッシュ一致を確認した。4 PNの16試行、および入口・出力の64試行については保存記録から指標を再計算し、元の結果と照合した。検証環境と詳細は [reproduction-check.json](reproduction-check.json) に記載している。
+Four representative trials were rerun using this repository's runner, and their raw-record hashes matched the references. Metrics were also recomputed from saved records for all 16 four-PN trials and all 64 input-side/output-side trials, and checked against the original results. The verification environment and details are recorded in [reproduction-check.json](reproduction-check.json).
 
-出典とライセンスは [NOTICE.md](NOTICE.md) を参照。
+See [NOTICE.md](NOTICE.md) for attribution and licensing information (Japanese).
